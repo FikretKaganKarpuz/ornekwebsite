@@ -37,7 +37,6 @@
         html {
             scroll-behavior: smooth;
             font-size: 16px;
-            cursor: none; /* Standart imleci gizleyip özel imleç kullanmak isterseniz bunu açabilirsiniz, şimdilik kapalı */
         }
 
         body {
@@ -49,30 +48,6 @@
             line-height: 1.6;
             overflow-x: hidden;
             position: relative;
-        }
-
-        /* --- CURSOR GLOW EFEKTİ (YENİ EKLENDİ) --- */
-        .cursor-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(0, 198, 255, 0.15) 0%, rgba(142, 45, 226, 0.05) 40%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none; /* Tıklamaları engellememesi için kritik */
-            z-index: 9999; /* En üstte ama tıklanamaz */
-            transform: translate(-50%, -50%);
-            mix-blend-mode: screen; /* Renklerin daha parlak görünmesini sağlar */
-            filter: blur(20px);
-            transition: width 0.2s, height 0.2s; /* Hover efektleri için geçiş */
-        }
-
-        /* Linklerin üzerine gelince glow efektinin büyümesi */
-        body.hovering .cursor-glow {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(0, 198, 255, 0.2) 0%, rgba(142, 45, 226, 0.1) 40%, transparent 70%);
         }
 
         /* Arka Plan Hareket Animasyonu */
@@ -338,9 +313,6 @@
 </head>
 <body>
 
-    <!-- Cursor Glow Elementi -->
-    <div class="cursor-glow"></div>
-
     <!-- Arka Plan Ambiyansı -->
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
@@ -485,32 +457,14 @@
     </footer>
 
     <script>
-        // --- CURSOR GLOW LOGIC (YENİ) ---
-        const cursorGlow = document.querySelector('.cursor-glow');
-
-        // Mouse hareketi ile glow'u taşı
-        document.addEventListener('mousemove', (e) => {
-            // Performans için requestAnimationFrame kullanabilirdik ama basitlik için doğrudan atama yeterli
-            cursorGlow.style.left = e.clientX + 'px';
-            cursorGlow.style.top = e.clientY + 'px';
-        });
-
-        // Tıklanabilir öğelerin üzerine gelince glow efektini büyüt
-        const clickables = document.querySelectorAll('a, button, input, textarea, .glass-card');
-        clickables.forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-        });
-
-
-        // --- Mevcut Mobil Menü Kodları ---
+        // Mobil Menü İşlevselliği
         const menuToggle = document.getElementById('mobile-menu');
         const navMenu = document.querySelector('.nav-menu');
         const navLinks = document.querySelectorAll('.nav-menu a');
 
         menuToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
-            // Hamburger ikonu animasyonu
+            // Hamburger ikonu animasyonu için
             const bars = document.querySelectorAll('.bar');
             if (navMenu.classList.contains('active')) {
                 bars[0].style.transform = "rotate(-45deg) translate(-5px, 6px)";
